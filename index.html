@@ -190,17 +190,44 @@ h1{font-size:34px;font-weight:700;color:#fff;margin:6px 0 2px;text-align:center;
 .tec.usada{opacity:.25}
 .tec.no{border-color:var(--coral);background:#ffece9;-webkit-animation:shk .4s;animation:shk .4s}
 .mcartas{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;gap:10px;-webkit-box-pack:center;justify-content:center;margin-top:12px;max-width:430px;width:100%}
-.mcarta{width:48%;max-width:210px;min-height:100px;border-radius:16px;background:-webkit-linear-gradient(top,#8be05a,var(--verde));background:linear-gradient(#8be05a,var(--verde));border:2px solid var(--verde-d);cursor:pointer;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;padding:5px;font-size:13px;font-weight:700;color:#fff;text-align:center;line-height:1.2;-webkit-box-shadow:0 5px 12px rgba(30,50,20,.2);box-shadow:0 5px 12px rgba(30,50,20,.2)}
-.mcarta.vira{background:var(--card);border-color:var(--linha);color:var(--texto)}
-.mcarta.par{background:#cdf0bd;border-color:var(--verde);color:#2c6b13}
+.mcarta{width:48%;max-width:210px;height:104px;min-height:104px;border-radius:16px;cursor:pointer;padding:0;background:none;border:0;-webkit-perspective:700px;perspective:700px}
+.mcin{position:relative;width:100%;height:100%;-webkit-transition:-webkit-transform .35s;transition:transform .35s;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}
+.mcarta.vira .mcin{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}
+.mface{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:16px;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;padding:5px;text-align:center;line-height:1.2;overflow:hidden;-webkit-box-shadow:0 5px 12px rgba(30,50,20,.2);box-shadow:0 5px 12px rgba(30,50,20,.2)}
+.mtras{background:-webkit-linear-gradient(top,#8be05a,var(--verde));background:linear-gradient(#8be05a,var(--verde));border:2px solid var(--verde-d);color:#fff}
+/* o brilho que corre pelo verso: e ele que chama a crianca para a carta */
+.mtras:after{content:"";position:absolute;top:-30%;left:-70%;width:45%;height:170%;background:-webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0));background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0));-webkit-transform:rotate(14deg);transform:rotate(14deg);-webkit-animation:mbri 3.2s linear infinite;animation:mbri 3.2s linear infinite}
+@-webkit-keyframes mbri{0%{left:-70%}60%,100%{left:130%}}
+@keyframes mbri{0%{left:-70%}60%,100%{left:130%}}
+.mfrente{-webkit-transform:rotateY(180deg);transform:rotateY(180deg);background:var(--card);border:2px solid var(--linha);color:var(--texto);font-size:13px;font-weight:700}
+.mcarta.par .mfrente{background:#cdf0bd;border-color:var(--verde);color:#2c6b13;-webkit-animation:mpul .5s 2;animation:mpul .5s 2}
+@-webkit-keyframes mpul{50%{-webkit-transform:rotateY(180deg) scale(1.07)}}
+@keyframes mpul{50%{transform:rotateY(180deg) scale(1.07)}}
+/* ⚠️ o verde da casa (--verde-d) da 3.5:1 sobre o cartao claro: abaixo do
+   minimo de 4.5 que a crianca precisa para enxergar. Verde ESCURO aqui. */
+.mplacar{font-weight:800;color:#2c6b13;background:var(--card);border:2px solid var(--linha);border-radius:12px;padding:4px 12px;margin:2px auto 0;display:inline-block;font-size:14px}
+/* PC velho sem 3D de verdade: a carta TROCA de face em vez de girar. Sem
+   isto ela ficaria virada de costas para sempre e a fase travava. */
+@supports not ((transform-style:preserve-3d) or (-webkit-transform-style:preserve-3d)){
+  .mcarta.vira .mcin{-webkit-transform:none;transform:none}
+  .mfrente{-webkit-transform:none;transform:none;opacity:0}
+  .mcarta.vira .mfrente{opacity:1;z-index:2}
+}
 .mcarta.no{-webkit-animation:shk .4s;animation:shk .4s}
-.mcarta .cst{width:74px;height:74px;object-fit:contain;opacity:.92;-webkit-filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+/* ⚠️ a carta e um flex EM LINHA: sem virar coluna, a figura fica AO LADO da
+   palavra e a carta estica de lado. Figura em cima, palavra embaixo. */
+
+.mmot{display:block;font-size:11px;line-height:1.15;margin-top:3px;font-weight:400;color:#5b4632}
+.mfig{width:46px;height:46px;object-fit:contain;display:block;margin:0 auto 1px}
+.mfig.grande{width:96px;height:96px;margin-bottom:4px}
+.mtras .cst{width:74px;height:74px;object-fit:contain;opacity:.92;-webkit-filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
 .tbar{width:250px;height:14px;background:rgba(255,255,255,.55);border-radius:999px;overflow:hidden;margin:10px 0 4px}
 .tbar>i{display:block;height:100%;width:100%;background:-webkit-linear-gradient(left,#ef5a4a,var(--sol));background:linear-gradient(90deg,#ef5a4a,var(--sol))}
 .placar{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;display:inline-block;padding:3px 12px;border-radius:999px;background:rgba(30,27,18,.78)}
 @media (max-height:720px){
   .cel{height:34px;line-height:34px;font-size:16px}
-  .mcarta{min-height:92px;font-size:13.5px}
+  .mcarta{height:98px;min-height:98px}
+  .mfrente{font-size:13.5px}
   .mcartas{max-width:430px;width:100%}
   .tec{width:44px;height:50px;line-height:44px;font-size:23px}
   .slot{width:41px;height:46px;line-height:42px;font-size:23px}
@@ -532,6 +559,23 @@ h1{font-size:34px;font-weight:700;color:#fff;margin:6px 0 2px;text-align:center;
   letter-spacing:1px;text-align:center;line-height:1.25;max-width:180px}
 .morro{-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;gap:6px}
 .morro .palavraGrande{gap:3px;margin-top:0;-webkit-flex-wrap:nowrap;flex-wrap:nowrap}
+/* ⚠️ botao dentro de coluna flex ENCOLHE ate o texto quebrar em tres linhas
+   (foi o que aconteceu com "Ouvir a palavra"). `flex:none` + largura minima. */
+/* --- a cruzadinha: casas quadradas que encolhem junto --- */
+.cgrade{display:inline-block;background:rgba(255,253,246,.96);border:2px solid var(--linha);
+  border-radius:14px;padding:6px;margin-bottom:8px}
+.clin{display:-webkit-box;display:-webkit-flex;display:flex}
+.ccel{width:34px;height:34px;border:1px solid var(--linha);background:#fffdf6;
+  font-size:20px;font-weight:700;color:var(--texto);text-align:center;line-height:32px}
+.ccel.vazia{border-color:transparent;background:none}
+.ccel.ativa{background:#fff3c4;border-color:#c9622f}
+.ccel.cheia{background:#eafce0}
+.cdicas{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;
+  gap:6px;-webkit-box-pack:center;justify-content:center;max-width:380px;margin-top:8px}
+.cdicas .pchip{font-size:13px;padding:7px 11px;cursor:pointer;min-height:40px}
+@media (max-height:700px){ .ccel{width:29px;height:29px;line-height:27px;font-size:17px} }
+.bouvir{-webkit-box-flex:0;-webkit-flex:none;flex:none;min-width:230px;
+  white-space:nowrap;margin-bottom:14px}
 .morro{padding:12px 8px}
 .morro .palavraGrande i{min-width:20px;font-size:18px;height:36px;line-height:34px;padding:0 2px}
 .tec.errou{background:#ffece9;border-color:var(--coral);color:#8a3226}
@@ -773,7 +817,7 @@ function consolo(){ falar(Math.random()<0.5?"lt_erro1":"lt_erro2"); }
 /* ============ ALTO-FALANTE POR RESPOSTA (acessibilidade) ============
    A crianca de 2o ano ainda esta aprendendo a ler. Sem isso, ela escolhe pelo
    desenho ou no chute. O botaozinho le AQUELA resposta, sem ler as outras. */
-var VOZOK={"13x3cu8": 1, "156sx12": 1, "1dm2tz2": 1, "1ejb0gl": 1, "1ejbs6u": 1, "1jtmgal": 1, "1jtmgam": 1, "1upxb7o": 1, "32yorv": 1, "32yorw": 1, "3773n9": 1, "3773wj": 1, "3773wk": 1, "3773wo": 1, "3774dy": 1, "3774dz": 1, "377f8g": 1, "377f9e": 1, "377fo1": 1, "377fo2": 1, "377io7": 1, "377io8": 1, "3ho5m": 1, "3hogm": 1, "3hogq": 1, "3hoiu": 1, "3hoke": 1, "3href": 1, "3t3m": 1, "3t3n": 1, "47ihl3": 1, "47x3yt": 1, "4ezaco": 1, "4gnw05": 1, "4hecx7": 1, "4lf60h": 1, "4n7090": 1, "4zv4rk": 1, "5w3itd": 1, "7mrw36": 1, "7tsz7t": 1, "878p2j": 1, "bhcich": 1, "dhat5v": 1, "f3k4b1": 1, "i864sm": 1, "mz6v2s": 1, "pao5oh": 1, "t8hnhn": 1, "vgdhd6": 1, "vgdhd7": 1, "wnml5j": 1, "xx5ctf": 1};
+var VOZOK={"13x3cu8": 1, "156sx12": 1, "1dldewt": 1, "1dm2tz2": 1, "1ejb0gl": 1, "1ejbs6u": 1, "1jtmgal": 1, "1jtmgam": 1, "1mjdmwk": 1, "1mnz6g1": 1, "1upxb7o": 1, "1vutb29": 1, "32yorv": 1, "32yorw": 1, "3773n9": 1, "3773wj": 1, "3773wk": 1, "3773wo": 1, "3774dy": 1, "3774dz": 1, "377f8g": 1, "377f9e": 1, "377fo1": 1, "377fo2": 1, "377io7": 1, "377io8": 1, "3ho5m": 1, "3hogm": 1, "3hogq": 1, "3hoiu": 1, "3hoke": 1, "3href": 1, "3t3m": 1, "3t3n": 1, "477pew": 1, "47igqu": 1, "47ihl3": 1, "47x3yt": 1, "47x42h": 1, "48pmvp": 1, "4eg1d2": 1, "4ezaco": 1, "4ezb6x": 1, "4feppk": 1, "4gn49w": 1, "4gnw05": 1, "4hecx7": 1, "4jx84q": 1, "4k0ay2": 1, "4lf60h": 1, "4n7090": 1, "4zv4rk": 1, "5tjc85": 1, "5w3itd": 1, "7mr4cx": 1, "7mrw36": 1, "7tsz7t": 1, "7ttqy2": 1, "877xca": 1, "878p2j": 1, "bhcich": 1, "dhat5v": 1, "f3k4b1": 1, "i864sm": 1, "k08jy5": 1, "mz6v2s": 1, "pao5oh": 1, "t8hnhn": 1, "vgdhd6": 1, "vgdhd7": 1, "wnml5j": 1, "xx5ctf": 1};
 var vz=document.getElementById("vz"), zapAtual=null;
 function chaveVoz(s){
   s=(s||"").replace(/\s+/g," ").replace(/^ | $/g,"").toLowerCase();
@@ -884,7 +928,7 @@ function poeVozes(){
    progresso: e so um atalho para abrir a fase.                             */
 function chave(s){ return (s||"").replace(/\s+/g," ").replace(/^ | $/g,"").toLowerCase(); }
 var CODIGO_MESTRE="1275@";
-var FASES_MESTRE=[["telaPlaca","1. A PLACA DA PADARIA"],["telaProva","2. A PROVA DA GR&#193;FICA"],["telaFalta","3. A LETRA QUE FALTA"],["telaSilabas","4. AS S&#205;LABAS DA PALAVRA"],["telaGavetas","5. AS DUAS GAVETAS"],["telaAquecimento","6. LEMBRANDO..."],["telaCerta","7. EST&#193; CERTA?"],["telaEscreva","8. ESCREVA O NOME DA LOJA"],["telaCaca","9. CA&#199;A-PALAVRAS DA VITRINE"],["telaCartaz","10. O CARTAZ DA FESTA"],["telaCarta","11. A CARTA DA DONA"],["telaMemoria","12. O ARQUIVO DA OFICINA"],["telaEnsinar","13. ENSINE A REGRA &#192; LINA"],["telaRelampago","14. REL&#194;MPAGO"],["telaMorro","15. A PLACA DO MORRO"],["telaFim","16. telaFim"]];
+var FASES_MESTRE=[["telaPlaca","1. A PLACA DA PADARIA"],["telaProva","2. A PROVA DA GR&#193;FICA"],["telaFalta","3. A LETRA QUE FALTA"],["telaSilabas","4. AS S&#205;LABAS DA PALAVRA"],["telaGavetas","5. AS DUAS GAVETAS"],["telaAquecimento","6. LEMBRANDO..."],["telaCerta","7. EST&#193; CERTA?"],["telaEscreva","8. ESCREVA O NOME DA LOJA"],["telaCaca","9. CA&#199;A-PALAVRAS DA VITRINE"],["telaDitado","10. O DITADO DA OFICINA"],["telaCartaz","11. O CARTAZ DA FESTA"],["telaCarta","12. A CARTA DA DONA"],["telaMemoria","13. O ARQUIVO DA OFICINA"],["telaEnsinar","14. ENSINE A REGRA &#192; LINA"],["telaAquece2","15. LEMBRANDO DE NOVO"],["telaCruz","16. A CRUZADINHA"],["telaRelampago","17. REL&#194;MPAGO"],["telaMorro","18. A PLACA DO MORRO"],["telaFim","19. telaFim"]];
 function telaMestre(){
   limpa();var t=el("div","tela");var c=el("div","centro");
   c.appendChild(el("div","selo","MODO PROFESSOR"));
@@ -955,7 +999,7 @@ function telaAbertura(){limpa();var t=el("div","tela");var c=el("div","centro");
   montaBarra(null,null);
   falar("lt_abertura");}
 /* ============ P1: PREVER (POE) ============ */
-function telaPlaca(){limpa();var t=el("div","tela");setProg(t,6);var c=el("div","centro");
+function telaPlaca(){limpa();var t=el("div","tela");setProg(t,5);var c=el("div","centro");
   c.appendChild(brotoEl("pq"));
   c.appendChild(el("div","selo","A PLACA DA PADARIA"));
   c.appendChild(el("div","balao","A dona pediu <b>PADARIA CAMPO BOM</b>. O meu ajudante pintou assim. Alguma coisa ficou estranha... <b>o que voc&#234; acha?</b>"));
@@ -988,7 +1032,7 @@ function telaPlaca(){limpa();var t=el("div","tela");setProg(t,6);var c=el("div",
 /* ============ 2: A PROVA DA GRÁFICA (duas provas, escolher a certa) ======
    ⚠️ as duas soam IGUAL quando se fala; o que muda e a LETRA. E esse o ponto
    da fase: o ouvido nao resolve sozinho, o olho precisa entrar.            */
-function telaProva(){limpa();var t=el("div","tela");setProg(t,12);
+function telaProva(){limpa();var t=el("div","tela");setProg(t,11);
   t.appendChild(el("div","balao","A gr&#225;fica mandou <b>duas provas</b> de cada placa. Toque na que est&#225; <b>escrita certa</b>."));
   var cen=el("div","centro");
   var RODS=[{c:"OMBRO A OMBRO",e:"ONBRO A ONBRO",loja:"A ACADEMIA DA ESQUINA",
@@ -999,7 +1043,22 @@ function telaProva(){limpa();var t=el("div","tela");setProg(t,12);
              r:"Antes de <b>B</b> escreve-se <b>M</b>: TAMBOR."},
             {c:"SEMPRE ABERTA",e:"SENPRE ABERTA",loja:"A FARM&#193;CIA DA PRA&#199;A",
              d:"Diga <b>SEM-PRE</b>. Escute o fim da primeira s&#237;laba.",
-             r:"Antes de <b>P</b> escreve-se <b>M</b>: SEMPRE."}];
+             r:"Antes de <b>P</b> escreve-se <b>M</b>: SEMPRE."},
+            {c:"TEMPO BOM LAVANDERIA",e:"TENPO BOM LAVANDERIA",loja:"A LAVANDERIA DA RUA",
+             d:"Diga <b>TEM-PO</b>. Que letra fecha a primeira s&#237;laba?",
+             r:"Antes de <b>P</b> escreve-se <b>M</b>: TEMPO."},
+            {c:"SOMBRA E &#193;GUA FRESCA",e:"SONBRA E &#193;GUA FRESCA",loja:"O QUIOSQUE DO PARQUE",
+             d:"Diga <b>SOM-BRA</b>. Olhe a letra que vem logo depois.",
+             r:"Antes de <b>B</b> escreve-se <b>M</b>: SOMBRA."},
+            {c:"CANTO DA M&#218;SICA",e:"CAMTO DA M&#218;SICA",loja:"A LOJA DE DISCOS",
+             d:"Cuidado: aqui depois vem <b>T</b>, e n&#227;o P nem B.",
+             r:"Antes de <b>T</b> escreve-se <b>N</b>: CANTO."},
+            {c:"BOMBOM DA VOV&#211;",e:"BONBOM DA VOV&#211;",loja:"A DOCERIA DA ESQUINA",
+             d:"Diga <b>BOM-BOM</b>. Que letra fecha a primeira s&#237;laba?",
+             r:"Antes de <b>B</b> escreve-se <b>M</b>: BOMBOM."},
+            {c:"BANCO DA PRA&#199;A",e:"BAMCO DA PRA&#199;A",loja:"A MARCENARIA",
+             d:"Depois vem <b>C</b> — e C n&#227;o e P nem B.",
+             r:"Antes de <b>C</b> escreve-se <b>N</b>: BANCO."}];
   var i2=0,errI=0,trava=false,fim=false;
   var selo=el("div","selo",RODS[0].loja);
   var box=el("div","opts");
@@ -1040,8 +1099,8 @@ function telaProva(){limpa();var t=el("div","tela");setProg(t,12);
    ⚠️ E O GESTO DA REGRA: a palavra ja esta quase escrita e o que falta e UMA
    letra. Escolher entre duas frases inteiras seria outro exercicio; aqui a
    crianca poe a letra no lugar dela, que e o que ela faz no caderno.       */
-function telaFalta(){limpa();var t=el("div","tela");setProg(t,19);
-  t.appendChild(el("div","balao","Falta uma letra em cada palavra. Toque na <b>letra certa</b> para completar."));
+function telaFalta(){limpa();var t=el("div","tela");setProg(t,16);
+  t.appendChild(el("div","balao","Falta uma letra em cada palavra. Toque na <b>letra certa</b> para preencher."));
   var cen=el("div","centro");
   var PAL=[{pal:"CAMPO",esc:"CA_PO",fig:"lt_campo",dep:"P",
             d:"Diga <b>CAM-PO</b> devagar. Que letra termina a primeira s&#237;laba?",
@@ -1049,12 +1108,30 @@ function telaFalta(){limpa();var t=el("div","tela");setProg(t,19);
            {pal:"BOMBA",esc:"BO_BA",fig:"lt_bomba",dep:"B",
             d:"Diga <b>BOM-BA</b>. Olhe a letra que vem logo depois.",
             r:"Depois vem <b>B</b>, ent&#227;o entra <b>M</b>: BOMBA."},
+           {pal:"PONTE",esc:"PO_TE",fig:"lt_ponte",dep:"T",
+            d:"Cuidado: aqui o som do nariz e o mesmo, mas olhe a letra de depois.",
+            r:"Depois vem <b>T</b>, ent&#227;o entra <b>N</b>: PONTE."},
+           {pal:"SOMBRA",esc:"SO_BRA",fig:"lt_canto",dep:"B",
+            d:"Diga <b>SOM-BRA</b>. Que letra vem logo depois do vazio?",
+            r:"Depois vem <b>B</b>, ent&#227;o entra <b>M</b>: SOMBRA."},
+           {pal:"VENTO",esc:"VE_TO",fig:"lt_vento",dep:"T",
+            d:"Depois do vazio vem <b>T</b> — e T n&#227;o e P nem B.",
+            r:"Depois vem <b>T</b>, ent&#227;o entra <b>N</b>: VENTO."},
+           {pal:"L&#194;MPADA",esc:"L&#194;_PADA",fig:"lt_lampada",dep:"P",
+            d:"Diga <b>L&#194;M-PA-DA</b>. Escute o fim da primeira s&#237;laba.",
+            r:"Depois vem <b>P</b>, ent&#227;o entra <b>M</b>: L&#194;MPADA."},
+           {pal:"MANGA",esc:"MA_GA",fig:"lt_manga",dep:"G",
+            d:"Depois do vazio vem <b>G</b>. G e P? G e B? N&#227;o.",
+            r:"Depois vem <b>G</b>, ent&#227;o entra <b>N</b>: MANGA."},
            {pal:"TAMBOR",esc:"TA_BOR",fig:"lt_tambor",dep:"B",
             d:"Diga <b>TAM-BOR</b>, como quem bate no tambor.",
             r:"Depois vem <b>B</b>, ent&#227;o entra <b>M</b>: TAMBOR."},
-           {pal:"PONTE",esc:"PO_TE",fig:"lt_ponte",dep:"T",
-            d:"Cuidado: aqui o som do nariz e o mesmo, mas olhe a letra de depois.",
-            r:"Depois vem <b>T</b>, ent&#227;o entra <b>N</b>: PONTE."}];
+           {pal:"CAMPE&#195;O",esc:"CA_PEÃO",fig:"lt_campeao",dep:"P",
+            d:"Diga <b>CAM-PE-&#195;O</b>. Escute a primeira s&#237;laba.",
+            r:"Depois vem <b>P</b>, ent&#227;o entra <b>M</b>: CAMPE&#195;O."},
+           {pal:"BOMBEIRO",esc:"BO_BEIRO",fig:"lt_bombeiro",dep:"B",
+            d:"Diga <b>BOM-BEI-RO</b>. Olhe a letra de depois.",
+            r:"Depois vem <b>B</b>, ent&#227;o entra <b>M</b>: BOMBEIRO."}];
   var i2=0,errI=0,trava=false,fim=false;
   var fig=imgEl(PAL[0].fig,"figFalta");
   var pal=el("div","palavraGrande","");
@@ -1103,7 +1180,7 @@ function telaFalta(){limpa();var t=el("div","tela");setProg(t,19);
   falar("lt_p3_intro");}
 
 /* ============ 4: AS SÍLABAS DA PALAVRA ============ */
-function telaSilabas(){limpa();var t=el("div","tela");setProg(t,25);
+function telaSilabas(){limpa();var t=el("div","tela");setProg(t,21);
   t.appendChild(el("div","balao","As s&#237;labas se espalharam pela oficina. Toque nelas <b>na ordem certa</b>."));
   var cen=el("div","centro");
   var RODS=[{pal:"CAMPE&#195;O",sil:["CAM","PE","&#195;O"],iscas:["CAN"],fig:"lt_campeao",
@@ -1114,7 +1191,16 @@ function telaSilabas(){limpa();var t=el("div","tela");setProg(t,25);
              r:"A primeira e <b>BOM</b>, com M — porque depois vem B."},
             {pal:"PONTE",sil:["PON","TE"],iscas:["POM"],fig:"lt_ponte",
              d:"Diga <b>PON-TE</b>. Cuidado: aqui a letra e a outra.",
-             r:"A primeira e <b>PON</b>, com N — porque depois vem T."}];
+             r:"A primeira e <b>PON</b>, com N — porque depois vem T."},
+            {pal:"L&#194;MPADA",sil:["L&#194;M","PA","DA"],iscas:["L&#194;N"],fig:"lt_lampada",
+             d:"Diga <b>L&#194;M-PA-DA</b>. A primeira leva acento no A.",
+             r:"A primeira e <b>L&#194;M</b>, com M — porque depois vem P."},
+            {pal:"TAMBOR",sil:["TAM","BOR"],iscas:["TAN"],fig:"lt_tambor",
+             d:"Diga <b>TAM-BOR</b>, como quem bate no tambor.",
+             r:"A primeira e <b>TAM</b>, com M — porque depois vem B."},
+            {pal:"VENTO",sil:["VEN","TO"],iscas:["VEM"],fig:"lt_vento",
+             d:"Diga <b>VEN-TO</b>. Depois da primeira s&#237;laba vem T.",
+             r:"A primeira e <b>VEN</b>, com N — porque depois vem T."}];
   var i2=0,pos=0,errI=0,trava=false,fim=false;
   var fig=imgEl(RODS[0].fig,"figFalta");
   var linha=el("div","palavraGrande","");
@@ -1157,11 +1243,16 @@ function telaSilabas(){limpa();var t=el("div","tela");setProg(t,25);
    ⚠️ SEM ESTE BLOCO A REGRA NAO EXISTE: uma regra de um lado so vira "ponha M
    em tudo", e a crianca sai escrevendo CAMTO e MAMGA. O contraste e o que da
    contorno — por isso o N vem logo depois do M, e nao noutra aula.        */
-function telaGavetas(){limpa();var t=el("div","tela");setProg(t,31);
+function telaGavetas(){limpa();var t=el("div","tela");setProg(t,26);
   t.appendChild(el("div","balao","A Lina guarda os moldes em <b>duas gavetas</b>. Toque na palavra e depois na <b>gaveta certa</b>."));
   var cen=el("div","centro");
   var FICHAS=[["CA_PO","M","P"],["BO_BA","M","B"],["SE_PRE","M","P"],
-              ["PO_TE","N","T"],["CA_TO","N","T"],["MA_GA","N","G"]];
+              ["PO_TE","N","T"],["CA_TO","N","T"],["MA_GA","N","G"],
+              ["TE_PO","M","P"],["SO_BRA","M","B"],["VE_TO","N","T"],
+              ["BA_CO","N","C"],["O_BRO","M","B"],["DE_TE","N","T"],
+              ["L&#194;_PADA","M","P"],["MU_DO","N","D"],
+              ["LI_PO","M","P"],["DEZE_BRO","M","B"],
+              ["CA_PE&#195;O","M","P"],["PLA_TA","N","T"]];
   var i2=0,errI=0,trava=false;
   var ficha=el("div","palavraGrande","");
   var bins=el("div","bins");
@@ -1192,7 +1283,7 @@ function telaGavetas(){limpa();var t=el("div","tela");setProg(t,31);
 
 /* ⚠️ REVISAO ESPACADA (Roediger, Bjork) NO MEIO, nao no fim. Nao e enchimento:
    e o que faz a crianca levar a regra para a semana que vem.               */
-function telaAquecimento(){limpa();var t=el("div","tela");setProg(t,38);var c=el("div","centro");
+function telaAquecimento(){limpa();var t=el("div","tela");setProg(t,32);var c=el("div","centro");
   c.appendChild(brotoEl("pq"));
   c.appendChild(el("div","selo","LEMBRANDO..."));
   c.appendChild(el("div","balao","Antes de continuar, lembre comigo: que letra vem antes do P e do B?"));
@@ -1217,11 +1308,15 @@ function telaAquecimento(){limpa();var t=el("div","tela");setProg(t,38);var c=el
   falar("lt_aquec_intro");}
 
 /* ============ 7: ESTÁ CERTA? (a placa passa ou volta para a oficina) ==== */
-function telaCerta(){limpa();var t=el("div","tela");setProg(t,44);
+function telaCerta(){limpa();var t=el("div","tela");setProg(t,37);
   t.appendChild(el("div","balao","A gr&#225;fica vai imprimir. Esta placa est&#225; <b>certa</b> ou <b>errada</b>?"));
   var cen=el("div","centro");
   var itens=[["CAMPO",true],["SENPRE",false],["BOMBEIRO",true],["CANPE&#195;O",false],
-             ["PONTE",true],["MAMGA",false],["SOMBRA",true],["TANBOR",false],["VENTO",true]];
+             ["PONTE",true],["MAMGA",false],["SOMBRA",true],["TANBOR",false],["VENTO",true],
+             ["TEMPO",true],["BONBA",false],["L&#194;MPADA",true],["OMBRO",true],
+             ["CAMTO",false],["BANCO",true],["ENPURRAR",false],["DEZEMBRO",true],
+             ["TAMTO",false],["SEMPRE",true],["CONBATE",false],["LIMPO",true],
+             ["DENTE",true],["SONBRA",false],["MUNDO",true]];
   var i2=0,errI=0,trava=false;
   var card=el("div","itemCard palavraCard");
   var lab=el("div","lab","");
@@ -1274,8 +1369,197 @@ function ajudaJd(n,ops){
 
 
 
+/* ============ SEGUNDO AQUECIMENTO (revisao espacada) ============
+   ⚠️ O primeiro fica no meio da primeira metade; este, no meio da segunda.
+   Duas voltas ESPACADAS fixam mais que dez repeticoes seguidas
+   (Roediger, Bjork) — nao e enchimento, e o que faz a regra durar.        */
+function telaAquece2(){limpa();var t=el("div","tela");setProg(t,79);var c=el("div","centro");
+  c.appendChild(brotoEl("pq"));
+  c.appendChild(el("div","selo","LEMBRANDO DE NOVO..."));
+  c.appendChild(el("div","balao","Voc&#234; j&#225; escreveu muita placa. Me diga: em <b>BOMBEIRO</b>, por que a letra &#233; <b>M</b>?"));
+  var opts=el("div","opts");
+  var alts=[["Porque logo depois vem <b>B</b>",true],
+            ["Porque a palavra e grande",false],
+            ["Porque come&#231;a com <b>B</b>",false]];
+  var i,resp=false;
+  for(i=0;i<alts.length;i++){(function(txt,certo){
+    var o=el("div","opt",txt);
+    if(certo) o.setAttribute("data-qa","1");
+    o.onclick=function(){ if(resp)return; arma();
+      if(certo){ resp=true; o.className="opt ok"; sCerto(); elogio(); reg("regra",true,1);
+        setTimeout(function(){ telaCruz(); },1400); }
+      else { o.className="opt no"; sErro(); consolo(); reg("regra",false,2);
+        setTimeout(function(){ o.className="opt"; },700); }
+    };
+    opts.appendChild(o);
+  })(alts[i][0],alts[i][1]);}
+  c.appendChild(opts);
+  c.appendChild(el("div","hint","O que manda e sempre a letra que vem DEPOIS."));
+  t.appendChild(c);app.appendChild(t);
+  montaBarra(null,null);
+  falar("lt_aquec2_intro");}
+
+/* ============ 13: A CRUZADINHA DA OFICINA ============
+   ⚠️ GESTO QUE O MARCOS NOMEOU. Aqui a palavra nao vem numa lista para
+   escolher: a crianca LE a dica, decide a palavra e ESCREVE letra por letra —
+   e as palavras se cruzam, entao uma ajuda a outra (a letra do cruzamento ja
+   aparece preenchida quando a vizinha ficou pronta).
+   A grade foi conferida ANTES de virar codigo: cinco palavras, 22 casas,
+   nenhum choque de letra.                                                    */
+var CRUZ=[{p:"SEMPRE",d:"h",l:3,c:1,dica:"O contr&#225;rio de nunca."},
+          {p:"BOMBA", d:"v",l:1,c:3,dica:"Puxa a &#225;gua do po&#231;o."},
+          {p:"CAMPO", d:"h",l:5,c:2,dica:"Onde o time do bairro joga bola."},
+          {p:"PONTE", d:"v",l:4,c:6,dica:"Liga um lado do rio ao outro."},
+          {p:"VENTO", d:"v".replace("v","h"),l:7,c:3,dica:"Balan&#231;a a roupa no varal."}];
+var CRUZL0=1,CRUZC0=1,CRUZLN=8,CRUZCN=7;
+function telaCruz(){
+  limpa();var t=el("div","tela");setProg(t,84);
+  t.appendChild(el("div","balao","A cruzadinha da oficina. Escreva a palavra da <b>dica</b> em destaque."));
+  var cen=el("div","centro");
+  var casas={},i,j,k;
+  /* onde cada casa fica, e de quais palavras ela participa */
+  for(i=0;i<CRUZ.length;i++){ var w=CRUZ[i];
+    for(k=0;k<w.p.length;k++){
+      var ll=(w.d==="h")?w.l:w.l+k, cc=(w.d==="h")?w.c+k:w.c;
+      casas[ll+","+cc]=w.p.charAt(k);
+    } }
+  var grade=el("div","cgrade"),cel={};
+  for(i=CRUZL0;i<=CRUZLN;i++){
+    var lin=el("div","clin");
+    for(j=CRUZC0;j<=CRUZCN;j++){
+      var ch=casas[i+","+j];
+      var d=el("div","ccel"+(ch?"":" vazia"),"");
+      if(ch) cel[i+","+j]=d;
+      lin.appendChild(d);
+    }
+    grade.appendChild(lin);
+  }
+  var pista=el("div","balao pequeno","");
+  var lista=el("div","cdicas");
+  var letras=el("div","letras");
+  var atual=null,passo=0,err=0,prontas=0,fimC=false,chips=[];
+  function casasDe(w){ var out=[],z;
+    for(z=0;z<w.p.length;z++){
+      var ll=(w.d==="h")?w.l:w.l+z, cc=(w.d==="h")?w.c+z:w.c;
+      out.push(cel[ll+","+cc]);
+    } return out; }
+  function jaTem(d){ return d && d.innerHTML !== ""; }
+  /* a marca do "toque aqui" anda junto: sempre no primeiro chip que falta.
+     E o mesmo cuidado do sim/nao — marca fixa aponta para quem ja foi feito. */
+  function proximaPalavra(){
+    var z;
+    for(z=0;z<CRUZ.length;z++){
+      var cs=casasDe(CRUZ[z]),c3,falta=false;
+      for(c3=0;c3<cs.length;c3++) if(!jaTem(cs[c3])){ falta=true; break; }
+      if(falta) return CRUZ[z];
+    }
+    return null;
+  }
+  function segue(){
+    var w=proximaPalavra();
+    if(w){ escolhe(w); }
+    else { atual=null; marca(); letras.innerHTML="";
+           letras.removeAttribute("data-qa"); }
+  }
+  function marca(){
+    var z,c2; for(z=0;z<CRUZ.length;z++){
+      var cs=casasDe(CRUZ[z]);
+      /* ⚠️ redesenhar o realce NAO pode apagar o que ja esta escrito: a casa
+         cheia continua verde, senao a crianca ve a palavra "desfeita". */
+      for(c2=0;c2<cs.length;c2++) if(cs[c2])
+        cs[c2].className="ccel"+(jaTem(cs[c2])?" cheia":"")
+                         +(atual===CRUZ[z]?" ativa":"");
+    }
+  }
+  function proximaVaga(){
+    var cs=casasDe(atual),z;
+    for(z=0;z<cs.length;z++) if(!jaTem(cs[z])) return z;
+    return -1;
+  }
+  function escolhe(w,chip){
+    if(fimC) return; arma(); sTap();
+    atual=w; passo=0; err=0;    /* sempre do comeco: a palavra se escreve inteira */
+    pista.innerHTML="<b>"+(w.d==="h"?"Deitada":"Em p&#233;")+":</b> "+w.dica;
+    marca(); teclado();
+  }
+  function teclado(){
+    letras.innerHTML="";
+    /* ⚠️ o `data-qa` do teclado ANUNCIA qual palavra se escreve agora. Sem
+       apaga-lo entre uma palavra e outra, ele continuava anunciando a
+       ANTERIOR — e quem fosse escrever (o auditor, ou a crianca guiada pelo
+       destaque) procurava teclas de uma palavra que nao esta mais em jogo. */
+    if(!atual){ letras.removeAttribute("data-qa"); return; }
+    letras.setAttribute("data-qa",atual.p);
+    var pool=atual.p.split("");
+    if(pool.indexOf("M")<0) pool.push("M");
+    if(pool.indexOf("N")<0) pool.push("N");
+    var ls=baguncar(pool),z,bts={};
+    for(z=0;z<ls.length;z++){(function(L){
+      var b=el("div","tec",L);
+      if(!bts[L]) bts[L]=[]; bts[L].push(b);
+      b.onclick=function(){ if(fimC||!t.parentNode||!atual) return; arma();
+        if(b.className.indexOf("usada")>=0) return;
+        var cs=casasDe(atual);
+        if(passo>=cs.length) return;
+        /* ⚠️ LICAO PAGA (ago/2026): o codigo PULAVA a casa do cruzamento, que ja
+           vem escrita pela palavra vizinha. So que ninguem digita pulando
+           letra: a crianca (e o auditor) escrevem a palavra INTEIRA, e o
+           toque na letra do cruzamento caia como ERRO — na palavra certa.
+           Agora a letra do cruzamento e aceita: ela so nao precisa ser
+           escrita de novo, mas continua valendo como passo. */
+        /* ⚠️ NUNCA PULAR CASA, nem a do cruzamento que ja veio escrita. Quem
+           escreve — a crianca ou o auditor — conta pelo que JA DIGITOU; um
+           avanco por dentro, sem tecla, deixa os dois defasados: a tela mostra
+           uma letra e o app espera outra. A letra do cruzamento se digita
+           tambem; ela so nao precisa ser pintada de novo. */
+        if(L===atual.p.charAt(passo)){
+          if(!jaTem(cs[passo])){ cs[passo].innerHTML=L; cs[passo].className="ccel cheia"; }
+          b.className="tec usada"; sPop(passo); passo++;
+          if(passo>=cs.length){
+            sCerto(); reg("escrever",err===0,err+1); prontas++;
+            var ce=centroTela(grade); faisca(ce[0],ce[1],"#ffd43b",14);
+            var z2; for(z2=0;z2<chips.length;z2++)
+              if(chips[z2].__w===atual) chips[z2].className="pchip feito feito"+((z2%6)+1);
+            atual=null; marca(); letras.innerHTML="";
+            letras.removeAttribute("data-qa");
+            if(prontas<CRUZ.length){ segue(); }
+            if(prontas>=CRUZ.length){ fimC=true; document.onkeydown=null;
+              festa();
+              setTimeout(function(){ depoisDaFala("lt_cruz_revela",8000,function(){
+                mostraBanner("A cruzadinha inteira, e todas com a letra certa!",telaRelampago); }); },450); }
+          }
+        } else { err++; b.className="tec no"; sErro();
+          setTimeout(function(){ if(b.className==="tec no") b.className="tec"; },420);
+          ajudaJd(err,{dica:"Diga a palavra devagar e escute a s&#237;laba do meio.",
+            concreto:function(){ var L2=atual.p.charAt(passo),a=bts[L2]||[],y;
+              for(y=0;y<a.length;y++) if(a[y].className.indexOf("usada")<0){ a[y].className="tec pisca"; return; } },
+            revelar:function(){ mostraDica("A palavra e <b>"+atual.p+"</b>."); }});
+        }
+      };
+      letras.appendChild(b);
+    })(ls[z]);}
+    document.onkeydown=function(ev){
+      if(!t.parentNode||fimC){ document.onkeydown=null; return; }
+      var L=String.fromCharCode(ev.keyCode||ev.which||0).toUpperCase();
+      if(!/^[A-Z]$/.test(L)) return;
+      var a=bts[L],y; if(!a) return;
+      for(y=0;y<a.length;y++) if(a[y].className.indexOf("usada")<0){ a[y].onclick(); return; }
+    };
+  }
+  for(i=0;i<CRUZ.length;i++){(function(w){
+    var ch=el("div","pchip",(w.d==="h"?"&#8594; ":"&#8595; ")+w.dica);
+    ch.__w=w; ch.onclick=function(){ escolhe(w,ch); };
+    chips.push(ch); lista.appendChild(ch);
+  })(CRUZ[i]);}
+  cen.appendChild(grade);cen.appendChild(pista);cen.appendChild(lista);cen.appendChild(letras);
+  cen.appendChild(el("div","hint","Pode tocar em outra dica se quiser mudar a ordem."));
+  t.appendChild(cen);app.appendChild(t);
+  segue();                       /* ja abre com a primeira palavra em jogo */
+  montaBarra("lt_cruz_dica","Todas as palavras seguem a regra: antes de P e de B vai M.");
+  falar("lt_cruz_intro");}
+
 /* ============ 13: ENSINE A REGRA A LINA (autoexplicacao) ============ */
-function telaEnsinar(){limpa();var t=el("div","tela");setProg(t,81);var c=el("div","centro");
+function telaEnsinar(){limpa();var t=el("div","tela");setProg(t,74);var c=el("div","centro");
   c.appendChild(brotoEl("pq"));
   c.appendChild(el("div","selo","ENSINE A REGRA &#192; LINA"));
   c.appendChild(el("div","balao","Agora me ensine: <b>quando</b> a palavra leva <b>M</b>?"));
@@ -1288,7 +1572,7 @@ function telaEnsinar(){limpa();var t=el("div","tela");setProg(t,81);var c=el("di
     var o=el("div","opt",txt);
     o.onclick=function(){ if(resp)return; arma();
       if(certo){ resp=true; o.className="opt ok"; sCerto(); MED.pos=1; salvaEstado();
-        depoisDaFala("lt_ensinar_obrigado",7000,function(){ telaRelampago(); }); }
+        depoisDaFala("lt_ensinar_obrigado",7000,function(){ telaAquece2(); }); }
       else { o.className="opt no"; sErro(); consolo(); MED.pos=0; salvaEstado();
         setTimeout(function(){ o.className="opt"; },700); }
     };
@@ -1301,14 +1585,14 @@ function telaEnsinar(){limpa();var t=el("div","tela");setProg(t,81);var c=el("di
 /* ============ HELPER: embaralhar ============ */
 function baguncar(a){var i,j,x;for(i=a.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));x=a[i];a[i]=a[j];a[j]=x;}return a;}
 /* ============ 9: CACA-PALAVRAS DA VITRINE ============ */
-var CACAJD=["CAMPO","BOMBA","SEMPRE","TAMBOR","OMBRO"];
+var CACAJD=["CAMPO","BOMBA","SEMPRE","TAMBOR","OMBRO","TEMPO","SOMBRA","LIMPO","BOMBOM","LAMPADA"];
 /* ⚠️ a grade tem que caber a MAIOR palavra: SEMENTE tem 7 letras e nao entra
    numa grade 6x6. Por isso o N virou config.                                */
-function telaCaca(){ telaCacaBase({lista:CACAJD,N:6,prog:56,conc:"regra",
-  txt:"Na vitrine da oficina est&#227;o escondidas <b>5 palavras com M</b>. Ache todas.",
+function telaCaca(){ telaCacaBase({lista:CACAJD,N:9,prog:47,conc:"regra",
+  txt:"Na vitrine da oficina est&#227;o escondidas <b>10 palavras com M</b>. Ache todas.",
   intro:"lt_caca_intro",dica:"lt_caca_dica",dicaTxt:"As palavras est&#227;o deitadas ou em p&#233;.",
   revela:"lt_caca_revela",msg:"Todas com <b>M</b>, porque depois vem <b>P</b> ou <b>B</b>!",
-  prox:telaCartaz}); }
+  prox:telaDitado}); }
 function telaCacaBase(cfg){
   /* sem config = alguem chamou a base direto (auditores de contraste/leiaute
      abrem TODA tela sem argumento). Cai na caca padrao em vez de estourar. */
@@ -1411,9 +1695,16 @@ var MONTAJD=[{p:"CAMPO",d:"O lugar aberto onde o time do bairro <b>joga bola</b>
              {p:"BOMBA",d:"A m&#225;quina que <b>puxa a &#225;gua</b> do po&#231;o."},
              {p:"PONTE",d:"Passa por cima do rio e <b>liga um lado ao outro</b>."},
              {p:"TAMBOR",d:"O instrumento que a banda <b>bate no desfile</b>."},
-             {p:"SEMPRE",d:"O contr&#225;rio de <b>nunca</b>."}];
+             {p:"SEMPRE",d:"O contr&#225;rio de <b>nunca</b>."},
+             {p:"SOMBRA",d:"O lugar fresco embaixo da &#225;rvore, longe do sol."},
+             {p:"TEMPO",d:"O que o rel&#243;gio marca."},
+             {p:"VENTO",d:"O que balan&#231;a a roupa no varal."},
+             {p:"OMBRO",d:"Fica entre o pesco&#231;o e o bra&#231;o."},
+             {p:"LIMPO",d:"O contr&#225;rio de <b>sujo</b>."},
+             {p:"BANCO",d:"Onde a gente senta na pra&#231;a."},
+             {p:"DEZEMBRO",d:"O m&#234;s do Natal."}];
 function telaEscreva(){
-  limpa();var t=el("div","tela");setProg(t,50);
+  limpa();var t=el("div","tela");setProg(t,42);
   var pi=0,err=0;
   var dica=el("div","balao","");t.appendChild(dica);
   var cen=el("div","centro");
@@ -1487,63 +1778,189 @@ function telaEscreva(){
 
 }
 /* ============ 12: O ARQUIVO DA OFICINA (memoria) ============ */
-var MEMJD=[{k:"campo",a:"CAMPO",b:"M, porque depois vem P"},
-           {k:"ombro",a:"OMBRO",b:"M, porque depois vem B"},
-           {k:"ponte",a:"PONTE",b:"N, porque depois vem T"},
-           {k:"manga",a:"MANGA",b:"N, porque depois vem G"},
-           {k:"sempre",a:"SEMPRE",b:"M, porque depois vem P"},
-           {k:"vento",a:"VENTO",b:"N, porque depois vem T"}];
+/* ⚠️ LIÇÃO PAGA (ago/2026, aqui mesmo): o lado de trds da carta era o
+   MOTIVO ("M, porque depois vem P") — e o motivo se REPETE. Três palavras
+   (CAMPO, SEMPRE, LÂMPADA) tinham a MESMA carta de motivo, palavra por
+   palavra. O motor casa pela chave `k`, então a criança virava duas cartas
+   visivelmente certas e ouvia que errou. Num jogo da memória a carta irmã
+   tem que ser RECONHECÍVEL: agora um lado é a palavra com a letra faltando
+   (CA_PO) e o outro é a mesma palavra inteira com o motivo embaixo — única,
+   e ainda ensina onde a letra mora.                                        */
+var MEMJD=[{k:"campo",a:"CAMPO",g:"CA_PO",b:"M, porque depois vem P"},
+           {k:"ombro",a:"OMBRO",g:"O_BRO",b:"M, porque depois vem B"},
+           {k:"ponte",a:"PONTE",g:"PO_TE",b:"N, porque depois vem T"},
+           {k:"manga",a:"MANGA",g:"MA_GA",b:"N, porque depois vem G"},
+           {k:"sempre",a:"SEMPRE",g:"SE_PRE",b:"M, porque depois vem P"},
+           {k:"vento",a:"VENTO",g:"VE_TO",b:"N, porque depois vem T"},
+           {k:"tambor",a:"TAMBOR",g:"TA_BOR",b:"M, porque depois vem B"},
+           {k:"lampada",a:"L&#194;MPADA",g:"L&#194;_PADA",b:"M, porque depois vem P"},
+           {k:"bomba",a:"BOMBA",g:"BO_BA",b:"M, porque depois vem B"},
+           {k:"canto",a:"CANTO",g:"CA_TO",b:"N, porque depois vem T"}];
 function telaMemoria(){
-  limpa();var t=el("div","tela");setProg(t,75);
-  t.appendChild(el("div","balao","Vire <b>duas cartas</b> e ache a palavra junto com o <b>motivo</b> da letra dela."));
+  limpa();var t=el("div","tela");setProg(t,68);
+  t.appendChild(el("div","balao","Vire <b>duas cartas</b>: ache a palavra com a <b>letra que falta</b> e a mesma palavra <b>inteira</b>."));
+  /* 6 pares por partida, sorteados dos 10: o tabuleiro cabe na tela da escola
+     (12 cartas GRANDES, sem rolar) e a partida seguinte vem diferente.       */
+  var uso=baguncar(MEMJD.slice()).slice(0,6);
   var baralho=[],i;
-  for(i=0;i<MEMJD.length;i++){ baralho.push({k:MEMJD[i].k,tx:MEMJD[i].a,tipo:"n"}); baralho.push({k:MEMJD[i].k,tx:MEMJD[i].b,tipo:"f"}); }
+  for(i=0;i<uso.length;i++){
+    baralho.push({k:uso[i].k,tx:uso[i].g,tipo:"n",
+      face:'<img src="img/lt_'+uso[i].k+'.png" class="mfig" alt=""><b>'+uso[i].g+'</b>'});
+    baralho.push({k:uso[i].k,tx:uso[i].a,tipo:"f",
+      face:'<b>'+uso[i].a+'</b><small class="mmot">'+uso[i].b+'</small>'});
+  }
   baguncar(baralho);
   var cen=el("div","centro");
+  /* ⚠️ o placar vem ANTES do tabuleiro. Embaixo ele ficava atras da barra
+     fixa do "Ouvir de novo" — a crianca nunca via quantos pares faltavam.  */
+  var placar=el("div","mplacar","Pares: <b>0</b> de "+uso.length);
+  cen.appendChild(placar);
   var box=el("div","mcartas");
   var aberta=null,trava=false,pares=0;
   for(i=0;i<baralho.length;i++){ (function(c){
-    var VERSO='<img src="img/lt_pincel_feliz.png" class="cst" alt="">';
-    var e=el("div","mcarta",VERSO);
+    /* carta com VIRADA 3D de verdade (regra da casa): duas faces no mesmo
+       cartao, a de tras com a arte da Lina e um BRILHO correndo para chamar.
+       Trocar so o innerHTML fazia a carta piscar de conteudo sem girar.    */
+    var e=el("div","mcarta");
+    var dentro=el("div","mcin");
+    var tras=el("div","mface mtras",'<img src="img/lt_pincel_feliz.png" class="cst" alt="">');
+    var frente=el("div","mface mfrente","");
+    dentro.appendChild(tras);dentro.appendChild(frente);e.appendChild(dentro);
     e.onclick=function(){ arma();
       if(trava) return;
       if(e.className.indexOf("par")>=0||e===((aberta||{}).el)) return;
-      e.className="mcarta vira"; e.innerHTML=c.tx; sTap();
-      if(!aberta){ aberta={el:e,c:c,verso:VERSO}; return; }
+      frente.innerHTML=(c.face||c.tx); e.className="mcarta vira"; sTap();
+      if(!aberta){ aberta={el:e,c:c}; return; }
       var a=aberta; aberta=null; trava=true;
       if(a.c.k===c.k&&a.c.tipo!==c.tipo){
-        a.el.className="mcarta par"; e.className="mcarta par"; sCerto(); reg("regra",true,1); pares++;
+        a.el.className="mcarta vira par"; e.className="mcarta vira par"; sCerto(); reg("regra",true,1); pares++;
+        placar.innerHTML="Pares: <b>"+pares+"</b> de "+uso.length;
         var ce=centroTela(e); faisca(ce[0],ce[1],"#8be05a",12);
         trava=false;
-        if(pares>=MEMJD.length){ trava=true;
+        if(pares>=uso.length){ trava=true;
           setTimeout(function(){ depoisDaFala("lt_mem_revela",8000,function(){
-            mostraBanner("Cada palavra com o <b>motivo</b> da letra dela!",telaEnsinar); }); },450); }
+            mostraBanner("Cada palavra encontrou a <b>letra que faltava</b> nela!",telaEnsinar); }); },450); }
       } else {
         a.el.className="mcarta vira no"; e.className="mcarta vira no"; sErro(); reg("regra",false,2);
-        setTimeout(function(){ a.el.className="mcarta"; a.el.innerHTML=a.verso; e.className="mcarta"; e.innerHTML=VERSO; trava=false; },950);
+        setTimeout(function(){ a.el.className="mcarta"; e.className="mcarta"; trava=false; },950);
       }
     };
     box.appendChild(e);
   })(baralho[i]); }
   cen.appendChild(box);
-  cen.appendChild(el("div","hint","S&#227;o 6 pares para achar."));
   t.appendChild(cen);app.appendChild(t);
   montaBarra(null,null);
   falar("lt_mem_intro");
 }
+/* ============ 16: O DITADO DA OFICINA (ouvir e escrever) ============
+   ⚠️ O GESTO QUE FALTAVA, e o Marcos nomeou: ditado. Aqui a crianca NAO ve a
+   palavra — ela OUVE e escreve. E a prova mais dura da regra, porque o ouvido
+   nao distingue "CAMPO" de "CANPO": so a regra resolve.
+   A voz de cada palavra ja existe (e o `op_` do alto-falante das respostas),
+   entao esta fase nao pede gravacao nova.                                    */
+var DITADO=[{p:"CAMPO",dica:"Depois do M vem <b>P</b>."},
+            {p:"BOMBA",dica:"Depois do M vem <b>B</b>."},
+            {p:"PONTE",dica:"Depois do N vem <b>T</b>."},
+            {p:"SEMPRE",dica:"Depois do M vem <b>P</b>."},
+            {p:"VENTO",dica:"Depois do N vem <b>T</b>."},
+            {p:"TAMBOR",dica:"Depois do M vem <b>B</b>."},
+            {p:"MANGA",dica:"Depois do N vem <b>G</b>."},
+            {p:"SOMBRA",dica:"Depois do M vem <b>B</b>."},
+            {p:"TEMPO",dica:"Depois do M vem <b>P</b>."},
+            {p:"BANCO",dica:"Depois do N vem <b>C</b>."},
+            {p:"OMBRO",dica:"Depois do M vem <b>B</b>."},
+            {p:"DENTE",dica:"Depois do N vem <b>T</b>."},
+            {p:"LIMPO",dica:"Depois do M vem <b>P</b>."},
+            {p:"PLANTA",dica:"Depois do N vem <b>T</b>."}];
+function telaDitado(){
+  limpa();var t=el("div","tela");setProg(t,53);
+  t.appendChild(el("div","balao","A Lina vai <b>ditar</b> o nome da loja. Toque no alto-falante, escute e <b>escreva</b>."));
+  var cen=el("div","centro");
+  var pi=0,fimD=false;
+  var bOuvir=el("button","btn amarelo bouvir","Ouvir a palavra");
+  var slots=el("div","slots");
+  var letras=el("div","letras");
+  cen.appendChild(bOuvir);cen.appendChild(slots);cen.appendChild(letras);
+  cen.appendChild(el("div","hint","Escute quantas vezes quiser antes de escrever."));
+  t.appendChild(cen);app.appendChild(t);
+  /* ⚠️ LICAO PAGA (ago/2026): `tocaVoz(k, elemento)` REESCREVE a classe do
+     elemento — ele foi feito para o botãozinho `.zap` das respostas. Passando o
+     botão grande "Ouvir a palavra", ele virava um alto-falante minúsculo no
+     primeiro toque, e o texto se espremia em três linhas. Quem quer só o SOM
+     chama sem o segundo argumento. */
+  function toca(){ var it=DITADO[pi]; if(!it) return;
+    var k=temVoz(it.p); if(k) tocaVoz(k); }
+  bOuvir.onclick=function(){ arma(); toca(); };
+  function rodada(){
+    if(pi>=DITADO.length||!t.parentNode) return;
+    var it=DITADO[pi],passo=0,err=0,i;
+    slots.innerHTML="";letras.innerHTML="";
+    letras.setAttribute("data-qa",it.p);
+    var caixas=[];
+    for(i=0;i<it.p.length;i++){ var s2=el("div","slot",""); slots.appendChild(s2); caixas.push(s2); }
+    /* o teclado traz as letras da palavra MAIS as duas da regra, sempre:
+       assim a escolha entre M e N existe em toda palavra. */
+    var pool=it.p.split("");
+    if(pool.indexOf("M")<0) pool.push("M");
+    if(pool.indexOf("N")<0) pool.push("N");
+    var ls=baguncar(pool), bts={};
+    for(i=0;i<ls.length;i++){ (function(L){
+      var b=el("div","tec",L);
+      if(!bts[L]) bts[L]=[];
+      bts[L].push(b);
+      b.onclick=function(){ if(fimD||!t.parentNode) return; arma();
+        if(b.className.indexOf("usada")>=0) return;
+        if(L===it.p.charAt(passo)){
+          caixas[passo].innerHTML=L; caixas[passo].className="slot cheio";
+          b.className="tec usada"; sPop(passo); passo++;
+          if(passo>=it.p.length){
+            sCerto(); reg("escrever",err===0,err+1);
+            var ce=centroTela(slots); faisca(ce[0],ce[1],"#ffd43b",16);
+            pi++;
+            if(pi>=DITADO.length){ fimD=true; document.onkeydown=null;
+              setTimeout(function(){ depoisDaFala("lt_dit_revela",8000,function(){
+                mostraBanner("Catorze palavras ditadas e escritas certas!",telaCartaz); }); },420);
+            } else setTimeout(function(){ rodada(); toca(); },820);
+          }
+        } else { err++; b.className="tec no"; sErro();
+          setTimeout(function(){ if(b.className==="tec no") b.className="tec"; },420);
+          ajudaJd(err,{dica:"Escute de novo e diga a palavra devagar, em s&#237;labas.",
+            concreto:function(){ var L2=it.p.charAt(passo),a=bts[L2]||[],j;
+              for(j=0;j<a.length;j++) if(a[j].className.indexOf("usada")<0){ a[j].className="tec pisca"; return; } },
+            revelar:function(){ mostraDica(it.dica); }});
+        }
+      };
+      letras.appendChild(b);
+    })(ls[i]); }
+    /* as duas portas: o teclado de verdade tambem escreve */
+    document.onkeydown=function(ev){
+      if(!t.parentNode||fimD){ document.onkeydown=null; return; }
+      var L=String.fromCharCode(ev.keyCode||ev.which||0).toUpperCase();
+      if(!/^[A-Z]$/.test(L)) return;
+      var a=bts[L],z; if(!a) return;
+      for(z=0;z<a.length;z++) if(a[z].className.indexOf("usada")<0){ a[z].onclick(); return; }
+    };
+  }
+  rodada();
+  setTimeout(toca,700);
+  montaBarra("lt_dit_dica","Antes de P e de B vai M; antes das outras letras, N.");
+  falar("lt_dit_intro");}
+
 /* ============ 10: O CARTAZ DA FESTA (marca-texto: ache os erros) ============
    ⚠️ GESTO NOVO, de proposito. Ate aqui a crianca ESCOLHIA entre respostas
    prontas; aqui ela varre um texto de verdade procurando o erro, que e o que
    ela faz quando revisa o proprio caderno. E a mesma regra, outro gesto.   */
 var CARTAZ=[["A","ok"],["BANDA","ok"],["DO","ok"],["CANPO","erro"],["TOCA","ok"],
             ["SENPRE","erro"],["NO","ok"],["DOMINGO","ok"],["COM","ok"],
-            ["TANBOR","erro"],["E","ok"],["BOMBO","ok"]];
-function telaCartaz(){limpa();var t=el("div","tela");setProg(t,63);
-  t.appendChild(el("div","balao","O cartaz da festa foi para a rua com <b>tr&#234;s palavras erradas</b>. Toque em cada uma que voc&#234; achar."));
+            ["TANBOR","erro"],["E","ok"],["BOMBO","ok"],["NA","ok"],
+            ["SONBRA","erro"],["DA","ok"],["PRA&#199;A"," ok"],["COM","ok"],
+            ["TENPO","erro"],["BOM","ok"],["PARA","ok"],["TODOS","ok"]];
+function telaCartaz(){limpa();var t=el("div","tela");setProg(t,58);
+  t.appendChild(el("div","balao","O cartaz da festa foi para a rua com <b>cinco palavras erradas</b>. Toque em cada uma que voc&#234; achar."));
   var cen=el("div","centro");
   cen.appendChild(el("div","selo","FESTA DA BANDA"));
   var quadro=el("div","cartaz");
-  var achou=0,total=3,errI=0,fim=false,chips=[];
+  var achou=0,total=5,errI=0,fim=false,chips=[];
   var i;
   for(i=0;i<CARTAZ.length;i++){(function(par){
     var e=el("div","pal",par[0]);
@@ -1565,7 +1982,7 @@ function telaCartaz(){limpa();var t=el("div","tela");setProg(t,63);
     chips.push(e); quadro.appendChild(e);
   })(CARTAZ[i]);}
   cen.appendChild(quadro);
-  cen.appendChild(el("div","hint","S&#227;o tr&#234;s palavras erradas no cartaz."));
+  cen.appendChild(el("div","hint","S&#227;o cinco palavras erradas no cartaz."));
   t.appendChild(cen);app.appendChild(t);
   montaBarra("lt_cartaz_dica","Leia palavra por palavra e olhe o que vem antes do P e do B.");
   falar("lt_cartaz_intro");}
@@ -1576,8 +1993,12 @@ function telaCartaz(){limpa();var t=el("div","tela");setProg(t,63);
    palavra inteira — que e o momento em que a regra realmente e usada.      */
 var FORCA=[{p:"BOMBEIRO",d:"Quem apaga o fogo e desce pelo cano do quartel."},
            {p:"CAMPEAO",d:"O time que ganhou o torneio do bairro."},
-           {p:"LAMPADA",d:"Acende a luz do letreiro quando escurece."}];
-function telaCarta(){limpa();var t=el("div","tela");setProg(t,69);
+           {p:"LAMPADA",d:"Acende a luz do letreiro quando escurece."},
+           {p:"SOMBRA",d:"O lugar fresco embaixo da &#225;rvore."},
+           {p:"DEZEMBRO",d:"O &#250;ltimo m&#234;s do ano, o do Natal."},
+           {p:"TEMPO",d:"O que o rel&#243;gio marca."},
+           {p:"CAMPEONATO",d:"O torneio que o time do bairro quer ganhar."}];
+function telaCarta(){limpa();var t=el("div","tela");setProg(t,63);
   t.appendChild(el("div","balao","A carta da dona molhou na chuva. Descubra a palavra: toque nas <b>letras</b>."));
   var cen=el("div","centro");
   var pi=0,fimF=false;
@@ -1594,7 +2015,12 @@ function telaCarta(){limpa();var t=el("div","tela");setProg(t,69);
     var it=FORCA[pi],vidas=6,falta=it.p.length,errI=0,i;
     pista.innerHTML=it.d;
     slots.innerHTML="";lamps.innerHTML="";letras.innerHTML="";
-    letras.setAttribute("data-qa",it.p);
+    /* ⚠️ AQUI NAO SE ANUNCIA A PALAVRA. Na forca, UM toque revela TODAS as
+       ocorrencias daquela letra — quem conta o passo pelas teclas ja usadas
+       (o auditor, e a crianca que segue a ordem) se perde na primeira letra
+       repetida. O teclado e o alfabeto inteiro: tocar em qualquer letra
+       sempre faz a fase andar (acerta, ou apaga uma lampada), e no fim das
+       lampadas a palavra se revela sozinha. Nao ha como travar. */
     var caixas=[];
     for(i=0;i<it.p.length;i++){ var s2=el("div","slot",""); slots.appendChild(s2); caixas.push(s2); }
     var lamp=[];
@@ -1654,9 +2080,11 @@ function telaCarta(){limpa();var t=el("div","tela");setProg(t,69);
 /* ============ 15: A PLACA DO MORRO (aplicar tudo numa placa so) ============ */
 var MORRO=[{esc:"CA_PO ALEGRE",cert:"M",dep:"P"},
            {esc:"RUA DA PO_TE",cert:"N",dep:"T"},
-           {esc:"BAR DO TA_BOR",cert:"M",dep:"B"}];
-function telaMorro(){limpa();var t=el("div","tela");setProg(t,94);
-  t.appendChild(el("div","balao","A &#250;ltima encomenda: a placa do morro. Complete as <b>tr&#234;s linhas</b> e a Lina imprime."));
+           {esc:"BAR DO TA_BOR",cert:"M",dep:"B"},
+           {esc:"BECO DA SO_BRA",cert:"M",dep:"B"},
+           {esc:"MORRO DO VE_TO",cert:"N",dep:"T"}];
+function telaMorro(){limpa();var t=el("div","tela");setProg(t,95);
+  t.appendChild(el("div","balao","A &#250;ltima encomenda: a placa do morro. Preencha as <b>cinco linhas</b> e a Lina imprime."));
   var cen=el("div","centro");
   var quadro=el("div","cartaz morro");
   var linhas=[],i,idx=0,errI=0,trava=false,fim=false;
@@ -1704,21 +2132,33 @@ function telaMorro(){limpa();var t=el("div","tela");setProg(t,94);
   falar("lt_morro_intro");}
 
 /* ============ 14: RELAMPAGO (certa ou errada, contra o relogio) ============ */
+/* a figura de cada palavra do relampago; a errada usa a MESMA da certa, senao
+   o desenho entregaria a resposta. */
+var FIGREL={"CAMPO":"lt_campo","SENPRE":"lt_sempre","BOMBEIRO":"lt_bombeiro",
+  "CANPE&#195;O":"lt_campeao","PONTE":"lt_ponte","MAMGA":"lt_manga",
+  "TANBOR":"lt_tambor","VENTO":"lt_vento","ONBRO":"lt_ombro",
+  "L&#194;MPADA":"lt_lampada","BONBA":"lt_bomba"};
 var RELAJD=[["CAMPO",true],["SENPRE",false],["BOMBEIRO",true],["CANPE&#195;O",false],
             ["PONTE",true],["MAMGA",false],["SOMBRA",true],["TANBOR",false],
             ["VENTO",true],["ONBRO",false],["L&#194;MPADA",true],["BONBA",false]];
 function telaRelampago(){
-  limpa();var t=el("div","tela");setProg(t,88);
+  limpa();var t=el("div","tela");setProg(t,89);
   t.appendChild(el("div","balao","R&#225;pido! Esta palavra est&#225; <b>escrita certa</b>?"));
-  var LIM=70000,ini=(new Date()).getTime(),acabou=false,pts=0,fila=baguncar(RELAJD.slice(0)),fi=0;
+  var LIM=150000,ini=(new Date()).getTime(),acabou=false,pts=0,fila=baguncar(RELAJD.slice(0)),fi=0;
   var cen=el("div","centro");
   var pl=el("div","placar","Acertos: 0");
   var tb=el("div","tbar");var tbi=el("i");tb.appendChild(tbi);
-  var card=el("div","itemCard palavraCard");var lab=el("div","lab","");
-  card.appendChild(lab);
+  var card=el("div","itemCard palavraCard");
+  var fig=imgEl("lt_campo","mfig grande"); card.appendChild(fig);
+  var lab=el("div","lab",""); card.appendChild(lab);
   var bins=el("div","bins");var bSim=el("div","bin sim","Est&#225; certa");var bNao=el("div","bin nao","Est&#225; errada");
   bins.appendChild(bSim);bins.appendChild(bNao);
   function mostra(){ var it=fila[fi%fila.length]; lab.innerHTML=it[0];
+    /* ⭐ a figura entra quando a palavra tem uma: no relampago o olho decide
+       antes da leitura, e o desenho da o contexto sem entregar a resposta
+       (a figura e a mesma na escrita certa e na errada). */
+    var f=FIGREL[it[0]]||"";
+    if(f){ fig.src="img/"+f+".png"; fig.style.display=""; } else { fig.style.display="none"; }
     marcaCerta(it[1]?bSim:bNao, it[1]?bNao:bSim); }
   function resp(v){ if(acabou) return; arma();
     var it=fila[fi%fila.length],ok=(v===it[1]);
