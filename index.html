@@ -172,7 +172,10 @@ h1{font-size:34px;font-weight:700;color:#fff;margin:6px 0 2px;text-align:center;
    mostrou: a grade tinha duas cores e a lista embaixo, uma so. */
 .pchip.feito{text-decoration:line-through}
 .slots{display:-webkit-box;display:-webkit-flex;display:flex;gap:8px;-webkit-box-pack:center;justify-content:center;margin-top:12px}
-.slot{width:46px;height:52px;border-radius:12px;background:rgba(58,48,32,.32);border:2px dashed rgba(255,255,255,.9);text-align:center;line-height:48px;font-size:26px;font-weight:700;color:#fff}
+/* ⚠️ a lacuna vazia tinha fundo com 32% de opacidade: a rua de pedra do
+   fundo aparecia DENTRO da caixa onde a crianca vai escrever. Lugar de
+   escrever e papel: opaco, com a borda tracejada por cima. */
+.slot{width:46px;height:52px;border-radius:12px;background:rgba(255,253,246,.93);border:2px dashed #b9a97f;text-align:center;line-height:48px;font-size:26px;font-weight:700;color:var(--texto);-webkit-box-shadow:0 3px 8px rgba(30,50,20,.16);box-shadow:0 3px 8px rgba(30,50,20,.16)}
 .slot.cheio{background:var(--card);border:2px solid var(--verde);border-bottom-width:4px;color:var(--verde-d);-webkit-animation:pop .3s;animation:pop .3s}
 .letras{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;gap:9px;-webkit-box-pack:center;justify-content:center;margin-top:16px;max-width:340px}
 .tec{width:50px;height:56px;border-radius:14px;background:rgba(255,253,246,.96);border:2px solid var(--linha);border-bottom-width:5px;text-align:center;line-height:50px;font-size:26px;font-weight:700;color:var(--texto);cursor:pointer;-webkit-box-shadow:0 5px 12px rgba(30,50,20,.18);box-shadow:0 5px 12px rgba(30,50,20,.18)}
@@ -1452,6 +1455,7 @@ function telaCruz(){
       };
       letras.appendChild(b);
     })(ls[z]);}
+    equilibra(letras, ls.length, 50);
     document.onkeydown=function(ev){
       if(!t.parentNode||fimC){ document.onkeydown=null; return; }
       var L=String.fromCharCode(ev.keyCode||ev.which||0).toUpperCase();
@@ -1497,6 +1501,16 @@ function telaEnsinar(){limpa();var t=el("div","tela");setProg(t,74);var c=el("di
   montaBarra(null,null);
   falar("lt_ensinar_pede");}
 /* ============ HELPER: embaralhar ============ */
+/* ⚠️ LETRA ORFA: com 6 teclas o teclado quebrava 5 + 1 — uma letra sozinha na
+   segunda linha, torta no meio da tela. A largura do bloco passa a sair da
+   CONTAGEM: com n teclas em L linhas, cabem ceil(n/L) por linha, e as linhas
+   ficam do mesmo tamanho. So vale para teclado pequeno (ate 8): o alfabeto
+   inteiro da forca continua em linhas de 5, que e o que a mao alcanca.      */
+function equilibra(caixa,n,larg){
+  if(!caixa||n<3||n>8) return;
+  var linhas=Math.ceil(n/5), porLinha=Math.ceil(n/linhas);
+  caixa.style.maxWidth=(porLinha*((larg||50)+9))+"px";
+}
 function baguncar(a){var i,j,x;for(i=a.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));x=a[i];a[i]=a[j];a[j]=x;}return a;}
 /* ============ 9: CACA-PALAVRAS DA VITRINE ============ */
 var CACAJD=["CAMPO","BOMBA","SEMPRE","TAMBOR","OMBRO","TEMPO","SOMBRA","LIMPO","BOMBOM","LAMPADA"];
@@ -1673,6 +1687,7 @@ function telaEscreva(){
       };
       letras.appendChild(b);
     })(ls[i]); }
+    equilibra(letras, ls.length, 50);
     function acendeTecla(){ var L=it.p.charAt(passo), a=bts[L]||[], j;
       for(j=0;j<a.length;j++) if(a[j].className.indexOf("usada")<0){ a[j].className="tec pisca"; return; } }
     function poeTecla(){ var L=it.p.charAt(passo), a=bts[L]||[], j;
@@ -1846,6 +1861,7 @@ function telaDitado(){
       };
       letras.appendChild(b);
     })(ls[i]); }
+    equilibra(letras, ls.length, 50);
     /* as duas portas: o teclado de verdade tambem escreve */
     document.onkeydown=function(ev){
       if(!t.parentNode||fimD){ document.onkeydown=null; return; }
